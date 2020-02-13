@@ -20,8 +20,10 @@ const fetcher = args => {
     } else {
       if (!fs.existsSync(saveTo)) {
         fs.writeFile(saveTo, body, "utf8", error => {
-          if (error) {
-            console.log(`Error saving to ${saveTo}`);
+          if (error || response.statusCode !== 200) {
+            console.log(
+              `Error saving to ${saveTo}. Response: ${response.statusCode}`
+            );
             process.exit();
           } else {
             console.log(
